@@ -3,20 +3,15 @@ from typing import Callable
 import numpy as np
 
 
-def find_best(population: np.ndarray, fitness_function: Callable[[np.ndarray], np.float64]) -> tuple[np.ndarray, float]:
-    best_individual = None
-    best_fitness = float("inf")
-
-    for individual in population:
-        fitness = fitness_function(individual)
-        if fitness < best_fitness:
-            best_individual = individual
-            best_fitness = fitness
+def find_best(population: np.ndarray, fitness: np.ndarray) -> tuple[np.ndarray, float]:
+    best_idx = np.argmin(fitness)
+    best_individual = population[best_idx]
+    best_fitness = fitness[best_idx]
 
     return best_individual, best_fitness
 
 
-def tournament_reproduction(population: np.ndarray, fitness_function: Callable[[np.ndarray], np.float64]) -> np.ndarray:
+def tournament_reproduction(population: np.ndarray, fitness: np.ndarray) -> np.ndarray:
     return population  # TODO
 
 
@@ -38,28 +33,31 @@ def evolution(
     """
     max_iterations = n_fitness_evaluations // population_size
     population = np.random.uniform(low=-cube_bound, high=cube_bound, size=(population_size, dimensions))
-    best_individual, best_fitness = find_best(population, fitness_function)
+    fitness = np.apply_along_axis(fitness_function, 1, population)
+    best_individual, best_fitness = find_best(population, fitness)
 
     for _ in range(max_iterations):
-        population = tournament_reproduction(population, fitness_function)
+        population = tournament_reproduction(population, fitness)
         mutate(population, mutation_strength)
-        generation_best_individual, generation_best_fitness = find_best(population, fitness_function)
+        fitness = np.apply_along_axis(fitness_function, 1, population)
+
+        generation_best_individual, generation_best_fitness = find_best(population, fitness)
         if generation_best_fitness < best_fitness:
             best_individual, best_fitness = generation_best_individual, generation_best_fitness
 
     return best_individual
 
 
-def inplace_op(arr: np.ndarray):
-    ones = np.random.uniform(0.0, 1.0, arr.shape)
-    np.add(arr, ones, out=arr)
+def my_fitness(vec: np.ndarray) -> float:
+    return np.sum(vec)
 
 
 def main():
-    my_arr = np.linspace(-5, 5, 10)
-    print(my_arr)
-    np.clip(my_arr, -3.0, 3.0, my_arr)
-    print(my_arr)
+    pop = np.random.uniform(-10, 10, (10, 3))
+    print(pop)
+    fit = np.apply_along_axis(my_fitness, 0, pop)
+    print(pop)
+    print(fit)
 
 
 if __name__ == '__main__':
