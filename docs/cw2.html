@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style>
+pre code {
+  background-color: #eee;
+  border: 1px solid #999;
+  display: block;
+  padding: 20px;
+}
+</style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ćwiczenie 2</title>
+</head>
+<body>
+
+<h1>Wprowadzenie do sztucznej inteligencji - ćwiczenie 2</h1>
+
+<h2>Zadanie</h2>
+Zaimplementować klasyczny algorytm ewolucyjny z selekcją turniejową i sukcesją generacyjną, bez krzyżowania. 
+Dostępny budżet to 10000 ewaluacji funkcji celu. Optymalizujemy funkcje numer 2 i 13 z CEC 2017 w 10 wymiarach. Ograniczenia kostkowe przestrzeni to -100, 100.
+
+<h2>Uwaga</h2>
+<ul>
+<li>Ponieważ algorytmy ewolucyjne wykorzystują losowość, nie wolno wyciągać wniosków na podstawie wyników pojedynczego uruchomienia. Należy porównywać średnie z co najmniej 25 uruchomień. W celu uzyskania pełnego obrazu, w tabelach z wynikami  oprócz średniej zamieszcza się odchylenie standardowe, oraz najlepszy i najgorszy ze znalezionych wyników.
+<li>Nie należy podawać zbyt wielu miejsc po przecinku.
+
+<li>Liczbę iteracji wyliczmy w kodzie: tmax=budżet/mu, gdzie mu to aktualnie przyjęta liczba osobników w populacji.
+<li>Oczywiście optymalne wartości parametrów są zależne od siebie i analizując parametry oddzielnie możemy ich nie znaleźć. Na tym ćwiczeniu nie szukamy jednak optymalnych parametrów, szukamy rozsądnych, wyrabiamy podstawowe intuicje.
+Na początek przyjmujemy rozsądne wartości parametrów, np. sigma=3. Na podstawie eksperymentów znajdujemy najlepszy dla danego zadania rozmiar populacji (np. sprawdzamy kolejne potęgi 2). Mając rozmiar populacji badamy wpływ siły mutacji, tj. wykonujemy eksperymenty i tworzymy kolejną tabelę.
+</li>
+</ul>
+
+<h2>Pytania (odpowiedzi proszę umieścić w dokumencie tekstowym)</h2>
+Zbadać wpływ:
+<ul>
+<li>liczby osobników w populacji, 
+<li>siły mutacji, 
+</ul>
+na jakość uzyskanych rozwiązań.<br>
+Po dobraniu parametrów należy sprawdzić czy wyniki poprawią się po użyciu pięciokrotnie większego budżetu.
+
+<p>Jakie wnioski można wyciągnąć na podstawie wyników tego ćwiczenia?</p>
+
+</BODY>
+</HTML>
+
