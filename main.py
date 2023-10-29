@@ -1,6 +1,7 @@
 from typing import Callable
 
 import numpy as np
+from cec2017.functions import f2, f13
 
 
 def find_best(population: np.ndarray, fitness: np.ndarray) -> tuple[np.ndarray, float]:
@@ -16,7 +17,8 @@ def tournament_reproduction(population: np.ndarray, fitness: np.ndarray) -> np.n
 
 
 def mutate(population: np.ndarray, mutation_strength: float):
-    pass  # TODO
+    mutations = np.random.normal(loc=0.0, scale=mutation_strength, size=population.shape)
+    np.add(population, mutations, out=population)
 
 
 def evolution(
@@ -39,8 +41,9 @@ def evolution(
     for _ in range(max_iterations):
         population = tournament_reproduction(population, fitness)
         mutate(population, mutation_strength)
-        fitness = np.apply_along_axis(fitness_function, 1, population)
+        np.clip(a=population, a_min=-cube_bound, a_max=cube_bound, out=population)  # clamping
 
+        fitness = np.apply_along_axis(fitness_function, 1, population)
         generation_best_individual, generation_best_fitness = find_best(population, fitness)
         if generation_best_fitness < best_fitness:
             best_individual, best_fitness = generation_best_individual, generation_best_fitness
@@ -59,6 +62,11 @@ def main():
     print(pop)
     print(fit)
 
+    np.clip(pop, -3.0, 3.0, out=pop)
+    print(pop)
+
+    minimum = evolution(f13)
+    print(minimum)
 
 if __name__ == '__main__':
     main()
