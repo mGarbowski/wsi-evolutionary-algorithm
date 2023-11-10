@@ -1,10 +1,11 @@
 from typing import Callable
 
 import numpy as np
-from cec2017.functions import f2, f13
+
+Solution = tuple[np.ndarray, np.float64]
 
 
-def find_best(population: np.ndarray, fitness: np.ndarray) -> tuple[np.ndarray, float]:
+def find_best(population: np.ndarray, fitness: np.ndarray) -> Solution:
     best_idx = np.argmin(fitness)
     best_individual = population[best_idx]
     best_fitness = fitness[best_idx]
@@ -38,7 +39,7 @@ def evolution(
         n_fitness_evaluations: int = 10_000,
         cube_bound: float = 100.0,
         dimensions: int = 10
-) -> np.ndarray:
+) -> Solution:
     """Evolutionary minimization of fitness function
 
     Returns the minimum of fitness_function
@@ -58,26 +59,4 @@ def evolution(
         if generation_best_fitness < best_fitness:
             best_individual, best_fitness = generation_best_individual, generation_best_fitness
 
-    return best_individual
-
-
-def my_fitness(vec: np.ndarray) -> float:
-    return np.sum(vec)
-
-
-def main():
-    pop = np.random.uniform(-10, 10, (10, 3))
-    print(pop)
-    fit = np.apply_along_axis(my_fitness, 0, pop)
-    print(pop)
-    print(fit)
-
-    np.clip(pop, -3.0, 3.0, out=pop)
-    print(pop)
-
-    minimum = evolution(f13)
-    print(minimum)
-
-
-if __name__ == '__main__':
-    main()
+    return best_individual, best_fitness
