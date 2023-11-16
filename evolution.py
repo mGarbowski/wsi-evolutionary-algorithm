@@ -18,7 +18,8 @@ def tournament_reproduction(population: np.ndarray, fitness: np.ndarray) -> np.n
     population_size = population.shape[0]
 
     for idx in range(population_size):
-        i, j = np.random.choice(a=population_size, size=2, replace=False)
+        # random choice with replacement will allow the worst individual to survive
+        i, j = np.random.choice(a=population_size, size=2, replace=True)
         if fitness[i] <= fitness[j]:
             next_population[idx] = population[i]
         else:
